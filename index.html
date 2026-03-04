@@ -70,10 +70,38 @@
                         <span class="truncate">Comprar Agora</span>
                     </a>
                 </div>
-                <div class="md:hidden">
-                    <span class="material-symbols-outlined text-3xl">menu</span>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn"
+                        class="p-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-lg transition-colors">
+                        <span class="material-symbols-outlined text-3xl">menu</span>
+                    </button>
                 </div>
             </header>
+
+            <!-- Mobile Menu Overlay -->
+            <div id="mobile-menu"
+                class="fixed inset-0 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-xl z-[60] flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300">
+                <button id="close-menu-btn"
+                    class="absolute top-6 right-6 p-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-lg hover:text-earth-terracotta transition-colors">
+                    <span class="material-symbols-outlined text-4xl">close</span>
+                </button>
+
+                <nav class="flex flex-col items-center gap-8 font-petrona w-full px-6 text-center">
+                    <a class="mobile-link text-3xl font-medium tracking-wide text-slate-800 dark:text-slate-200 hover:text-earth-terracotta dark:hover:text-earth-terracotta transition-colors"
+                        href="#frutos">O Brigadeiro</a>
+                    <a class="mobile-link text-3xl font-medium tracking-wide text-slate-800 dark:text-slate-200 hover:text-earth-terracotta dark:hover:text-earth-terracotta transition-colors"
+                        href="#receita">A Jornada</a>
+                    <a class="mobile-link text-3xl font-medium tracking-wide text-slate-800 dark:text-slate-200 hover:text-earth-terracotta dark:hover:text-earth-terracotta transition-colors"
+                        href="#historia">História</a>
+                    <a class="mobile-link text-3xl font-medium tracking-wide text-slate-800 dark:text-slate-200 hover:text-earth-terracotta dark:hover:text-earth-terracotta transition-colors"
+                        href="#loja">Loja</a>
+                </nav>
+
+                <a href="https://wa.me/5551991437454" target="_blank" rel="noopener noreferrer"
+                    class="mt-4 flex shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full h-14 px-10 bg-primary text-slate-900 text-lg font-bold tracking-widest shadow transition-all hover:shadow-lg focus:outline-none uppercase w-[80%] max-w-[300px]">
+                    Comprar Agora
+                </a>
+            </div>
             <main class="flex flex-col flex-1">
                 <!-- Hero Section -->
                 <div class="px-4 md:px-20 py-8">
@@ -398,6 +426,34 @@
 
             document.querySelectorAll(".scroll-animate").forEach((el) => {
                 observer.observe(el);
+            });
+
+            // Mobile Menu Logic
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            function toggleMenu() {
+                const isOpen = mobileMenu.classList.contains('opacity-0');
+                if (isOpen) {
+                    mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+                } else {
+                    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                    document.body.style.overflow = ''; // Restore scrolling
+                }
+            }
+
+            mobileMenuBtn.addEventListener('click', toggleMenu);
+            closeMenuBtn.addEventListener('click', toggleMenu);
+
+            // Close menu when a link is clicked
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                    document.body.style.overflow = '';
+                });
             });
         });
     </script>
