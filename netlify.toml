@@ -1,0 +1,10 @@
+[build]
+  # O diretório que o Netlify vai publicar (neste caso, a raiz do projeto)
+  publish = "."
+
+  # Como é um site estático (apenas HTML, CSS(Tailwind via CDN) e JS nativo), não há comando de build.
+  command = ""
+
+[build.environment]
+  # Define a versão do Node (apenas por precaução se houvesse algum build no futuro)
+  NODE_VERSION = "20"
