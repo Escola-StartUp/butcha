@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Petrona:ital,wght@0,300..900;1,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#bc8a5f", // Caramelo/Bronze fino
+                        "background-light": "#fcfaf7", // Creme claríssimo
+                        "background-dark": "#2b1c13", // Café Intenso/Marrom fundo do logo
+                        "earth-beige": "#eaddc6", // Bege terroso amendoado
+                        "earth-terracotta": "#8c5230", // Marrom Doce / Cobre
+                        "earth-olive": "#b89f7a", // Tom seco artesanal/palha fina
+                        "earth-taupe": "#9b8571"
+                    },
+                    fontFamily: {
+                        "display": ["Cinzel", "serif"],
+                        "petrona": ["Petrona", "serif"],
+                        "playfair": ["Playfair Display", "serif"],
+                        "sans": ["Playfair Display", "serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Playfair Display', serif;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100">
+    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <!-- Header / Navigation -->
+            <header
+                class="flex items-center justify-between whitespace-nowrap px-6 md:px-12 py-5 bg-background-light/60 dark:bg-background-dark/80 backdrop-blur-lg sticky top-0 z-50 border-b border-white/10 dark:border-white/5 transition-all duration-300 hover:bg-background-light/90 dark:hover:bg-background-dark/95">
+                <div class="hidden md:flex flex-1 items-center justify-between w-full">
+
+                    <nav class="flex flex-1 justify-center items-center gap-12 font-petrona">
+                        <a class="text-lg font-medium tracking-wide text-slate-800 dark:text-slate-200 relative after:absolute after:-bottom-1 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-earth-terracotta after:transition-transform hover:text-earth-terracotta dark:hover:text-earth-terracotta hover:after:origin-bottom-left hover:after:scale-x-100 transition-colors"
+                            href="#frutos">O Brigadeiro</a>
+                        <a class="text-lg font-medium tracking-wide text-slate-800 dark:text-slate-200 relative after:absolute after:-bottom-1 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-earth-terracotta after:transition-transform hover:text-earth-terracotta dark:hover:text-earth-terracotta hover:after:origin-bottom-left hover:after:scale-x-100 transition-colors"
+                            href="#receita">A Jornada</a>
+                        <a class="text-lg font-medium tracking-wide text-slate-800 dark:text-slate-200 relative after:absolute after:-bottom-1 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-earth-terracotta after:transition-transform hover:text-earth-terracotta dark:hover:text-earth-terracotta hover:after:origin-bottom-left hover:after:scale-x-100 transition-colors"
+                            href="#historia">História</a>
+                        <a class="text-lg font-medium tracking-wide text-slate-800 dark:text-slate-200 relative after:absolute after:-bottom-1 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-earth-terracotta after:transition-transform hover:text-earth-terracotta dark:hover:text-earth-terracotta hover:after:origin-bottom-left hover:after:scale-x-100 transition-colors"
+                            href="#loja">Loja</a>
+                    </nav>
+
+                    <a href="https://wa.me/5551991437454" target="_blank" rel="noopener noreferrer"
+                        class="flex shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full h-11 px-8 bg-primary text-slate-900 text-sm font-bold tracking-widest shadow transition-all hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark uppercase">
+                        <span class="truncate">Comprar Agora</span>
+                    </a>
+                </div>
+                <div class="md:hidden">
+                    <span class="material-symbols-outlined text-3xl">menu</span>
+                </div>
+            </header>
+            <main class="flex flex-col flex-1">
+                <!-- Hero Section -->
+                <div class="px-4 md:px-20 py-8">
+                    <div class="@container">
+                        <div
+                            class="flex flex-col items-center justify-center gap-10 bg-white/40 dark:bg-slate-900/30 rounded-3xl p-10 md:p-20 border border-white/50 dark:border-slate-800 shadow-sm min-h-[600px] relative overflow-hidden text-center backdrop-blur-sm">
+
+                            <!-- Top: Big Logo -->
+                            <div class="flex items-center justify-center animate-fade-in-up">
+                                <img src="lo.png" alt="Butcha Brigadeiros Grande Logo"
+                                    class="w-full max-w-[320px] md:max-w-[420px] h-auto object-contain drop-shadow-xl" />
+                            </div>
+
+                            <!-- Bottom: Slogan & Call to Action -->
+                            <div class="flex flex-col items-center gap-8 max-w-[800px] z-10">
+                                <span
+                                    class="text-earth-terracotta tracking-[0.3em] font-petrona uppercase text-xs md:text-sm font-bold">A
+                                    essência dos nossos pampas</span>
+                                <h1
+                                    class="text-slate-900 dark:text-slate-100 text-5xl md:text-6xl lg:text-[5rem] font-medium leading-[1.1] tracking-[-0.02em] font-display text-balance">
+                                    O AUTÊNTICO SABOR DO SUL EM CADA MORDIDA
+                                </h1>
+                                <p
+                                    class="text-earth-olive dark:text-slate-400 text-lg md:text-2xl font-petrona italic leading-relaxed max-w-2xl mx-auto">
+                                    Brigadeiros artesanais finos com alma do Butiá
+                                </p>
+                                <button
+                                    class="mt-6 flex cursor-pointer items-center justify-center overflow-hidden rounded-full h-14 md:h-16 px-12 md:px-14 bg-primary text-slate-900 text-lg md:text-xl font-bold font-display tracking-widest shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgba(242,204,13,0.3)] hover:-translate-y-1 hover:scale-105 transition-all z-10 uppercase">
+                                    <span class="truncate">Descubra Nossa Linha</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Frutos Selecionados Section -->
+                <section
+                    class="flex flex-col gap-10 px-6 md:px-20 py-16 bg-white dark:bg-slate-900/20 scroll-animate opacity-0 translate-y-12 transition-all duration-[800ms] ease-out"
+                    id="frutos">
+                    <div class="flex flex-col gap-4 text-center items-center">
+                        <span class="text-earth-olive font-bold tracking-widest font-petrona uppercase text-xs">A
+                            Origem</span>
+                        <h2
+                            class="text-slate-900 dark:text-slate-100 text-4xl md:text-5xl font-black leading-tight tracking-tight font-display max-w-[720px]">
+                            Conheça a Butcha Brigadeiros
+                        </h2>
+                        <div class="h-1 w-20 bg-earth-terracotta rounded-full mb-4"></div>
+                        <p class="text-slate-500 dark:text-slate-400 text-lg font-normal leading-relaxed max-w-[720px]">
+                            Inovação e Tradição: Uma experiência única que une a cremosidade do brigadeiro com o sabor
+                            doce e levemente azedo do mas amado fruto, uma fruta tipicamente gaúcha.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Card 1 -->
+                        <div
+                            class="group flex flex-col gap-5 p-6 rounded-3xl bg-background-light dark:bg-slate-800/40 border border-earth-beige/40 dark:border-slate-700/50 hover:border-primary/50 hover:bg-white dark:hover:bg-slate-800 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
+                            <div class="w-full aspect-[5/4] bg-center bg-no-repeat bg-cover rounded-2xl shadow-sm overflow-hidden relative"
+                                data-alt="Raw organic cocoa beans in a woven basket">
+                                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                    style='background-image: url("card01.png");'></div>
+                            </div>
+                            <div class="flex flex-col gap-3 pt-2">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="h-[2px] w-8 bg-primary rounded-full transition-all duration-500 group-hover:w-12"></span>
+                                    <h3
+                                        class="text-slate-900 dark:text-slate-100 text-xl font-bold font-display leading-tight">
+                                        Mais que um Brigadeiro</h3>
+                                </div>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mt-1">Um produto
+                                    que
+                                    valoriza a cultura local e celebra a biodiversidade do nosso estado. Perfeito para
+                                    quem busca sabores autênticos e inovadores.</p>
+                            </div>
+                        </div>
+                        <!-- Card 2 -->
+                        <div
+                            class="group flex flex-col gap-5 p-6 rounded-3xl bg-background-light dark:bg-slate-800/40 border border-earth-beige/40 dark:border-slate-700/50 hover:border-primary/50 hover:bg-white dark:hover:bg-slate-800 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
+                            <div class="w-full aspect-[5/4] bg-center bg-no-repeat bg-cover rounded-2xl shadow-sm overflow-hidden relative"
+                                data-alt="Fresh farm milk being poured into a rustic jug">
+                                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                    style='background-image: url("card02.png");'></div>
+                            </div>
+                            <div class="flex flex-col gap-3 pt-2">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="h-[2px] w-8 bg-primary rounded-full transition-all duration-500 group-hover:w-12"></span>
+                                    <h3
+                                        class="text-slate-900 dark:text-slate-100 text-xl font-bold font-display leading-tight">
+                                        Ingredientes Selecionados</h3>
+                                </div>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mt-1">Frutos
+                                    selecionados da melhor qualidade. Receita exclusiva, artesanal e sem conservantes.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Card 3 -->
+                        <div
+                            class="group flex flex-col gap-5 p-6 rounded-3xl bg-background-light dark:bg-slate-800/40 border border-earth-beige/40 dark:border-slate-700/50 hover:border-primary/50 hover:bg-white dark:hover:bg-slate-800 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
+                            <div class="w-full aspect-[5/4] bg-center bg-no-repeat bg-cover rounded-2xl shadow-sm overflow-hidden relative"
+                                data-alt="Seasonal fruits like berries and passionfruit on a wooden surface">
+                                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                    style='background-image: url("card03.png");'></div>
+                            </div>
+                            <div class="flex flex-col gap-3 pt-2">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="h-[2px] w-8 bg-primary rounded-full transition-all duration-500 group-hover:w-12"></span>
+                                    <h3
+                                        class="text-slate-900 dark:text-slate-100 text-xl font-bold font-display leading-tight">
+                                        Para Toda Ocasião</h3>
+                                </div>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mt-1">Ideal para
+                                    lembrancinhas especiais, eventos corporativos, degustação e revenda. Um presente que
+                                    marca momentos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Recipe Section with Texture Focus -->
+                <section
+                    class="px-6 md:px-20 py-20 bg-earth-beige/40 dark:bg-background-dark scroll-animate opacity-0 translate-y-12 transition-all duration-[800ms] ease-out"
+                    id="receita">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="flex flex-col gap-8 order-2 lg:order-1 lg:pr-10">
+                            <h2
+                                class="text-slate-900 dark:text-slate-100 text-4xl md:text-5xl font-medium leading-[1.15] tracking-tight font-display text-balance">
+                                Uma jornada que começou na Escola StartUP</h2>
+                            <div
+                                class="relative bg-white dark:bg-slate-800/80 p-8 rounded-2xl border border-earth-beige/50 dark:border-slate-700/50 shadow-sm mt-4">
+                                <span class="absolute -top-6 -left-2 text-6xl text-primary/30 font-display">"</span>
+                                <p
+                                    class="text-xl md:text-2xl text-slate-700 dark:text-slate-300 font-petrona leading-relaxed italic relative z-10">
+                                    A Butcha Brigadeiros nasceu como um projeto inovador no Projeto Food Makers,
+                                    transformando um desafio de empreendedorismo em uma marca de alto valor cultural.
+                                </p>
+                            </div>
+                            <div class="space-y-10 mt-6">
+                                <div class="flex gap-6 items-start group">
+                                    <div
+                                        class="bg-earth-beige/30 dark:bg-slate-800 p-4 rounded-2xl text-earth-terracotta group-hover:bg-primary/20 group-hover:text-primary transition-colors">
+                                        <span class="material-symbols-outlined text-3xl">school</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4
+                                            class="font-bold font-display text-xl text-slate-900 dark:text-slate-100 mb-2">
+                                            Empreendedorismo e Impacto</h4>
+                                        <p class="text-slate-500 dark:text-slate-400 leading-relaxed text-base">Um
+                                            projeto desenvolvido por alunos
+                                            da Escola StartUp da rede Calábria, transformando ideias em realidade e
+                                            gerando oportunidades.</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-6 items-start group">
+                                    <div
+                                        class="bg-earth-beige/30 dark:bg-slate-800 p-4 rounded-2xl text-earth-terracotta group-hover:bg-primary/20 group-hover:text-primary transition-colors">
+                                        <span class="material-symbols-outlined text-3xl">eco</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4
+                                            class="font-bold font-display text-xl text-slate-900 dark:text-slate-100 mb-2">
+                                            Cultura Gaúcha
+                                        </h4>
+                                        <p class="text-slate-500 dark:text-slate-400 leading-relaxed text-base">
+                                            Celebramos a biodiversidade do RS
+                                            através de uma experiência única e autêntica do sabor do butiá, valorizando
+                                            nossas origens.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative order-1 lg:order-2 w-full max-w-[500px] mx-auto">
+                            <div class="aspect-[4/5] bg-center bg-no-repeat bg-cover rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] ring-1 ring-black/5"
+                                data-alt="Imagem representativa da jornada"
+                                style='background-image: url("jornada.jpg");'>
+                            </div>
+                            <div
+                                class="absolute -bottom-8 -left-4 md:-left-12 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-earth-beige/50 dark:border-slate-700/50 max-w-[280px]">
+                                <p class="text-earth-terracotta font-black text-2xl font-display leading-tight">Projeto
+                                    Original<br><span
+                                        class="text-slate-600 dark:text-slate-400 font-petrona text-lg font-normal italic mt-1 block">Escola
+                                        StartUP</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- History Section -->
+                <section
+                    class="px-6 md:px-20 py-24 text-center bg-white dark:bg-background-dark scroll-animate opacity-0 translate-y-12 transition-all duration-[800ms] ease-out"
+                    id="historia">
+                    <div class="max-w-4xl mx-auto flex flex-col items-center gap-8">
+                        <div
+                            class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-primary/30 p-1 shadow-lg mx-auto">
+                            <img class="w-full h-full object-cover rounded-full" data-alt="Início da Butcha Brigadeiros"
+                                src="hist.jpg" />
+                        </div>
+                        <h2 class="text-4xl md:text-5xl font-black font-display text-slate-900 dark:text-slate-100">
+                            Nossa História</h2>
+                        <div
+                            class="prose prose-lg dark:prose-invert text-slate-700 dark:text-slate-300 font-light leading-loose space-y-6">
+                            <p>
+                                A Butcha Brigadeiros nasceu como um audacioso projeto que transcendeu as paredes de sala
+                                de aula. O que começou como um incentivo ao empreendedorismo através do inovador
+                                <strong>Projeto Food Makers</strong>, rapidamente floresceu em uma marca de dar sabor e
+                                propósito à comunidade.
+                            </p>
+                            <p>
+                                Nosso propósito vai muito além de produzir doces finos. Nós queremos apresentar uma
+                                autêntica experiência de
+                                valorização da cultura e culinária, usando insumos de altíssima qualidade. Tudo isso
+                                sempre feito pelas apaixonadas mãos de jovens empreendedores focados num belo futuro,
+                                com o suporte contínuo da rede Calábria.
+                            </p>
+                        </div>
+                        <div class="mt-4">
+                            <span class="material-symbols-outlined text-5xl text-earth-olive">nature_people</span>
+                        </div>
+                    </div>
+                </section>
+                <!-- Call to Action -->
+                <section
+                    class="px-6 md:px-20 py-16 scroll-animate opacity-0 translate-y-12 transition-all duration-[800ms] ease-out">
+                    <div
+                        class="bg-earth-olive rounded-3xl p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10">
+                        <div class="flex flex-col gap-4 text-center md:text-left">
+                            <h2 class="text-white text-3xl md:text-5xl font-bold font-display">Pronto para provar a
+                                diferença?</h2>
+                        </div>
+                        <a href="https://wa.me/5551991437454" target="_blank" rel="noopener noreferrer"
+                            class="inline-block bg-primary hover:bg-white text-slate-900 px-10 py-5 rounded-full text-xl font-bold font-display tracking-wider transition-all shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgba(242,204,13,0.3)] hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-primary/50 whitespace-nowrap">
+                            Visite nosso projeto
+                        </a>
+                    </div>
+                </section>
+            </main>
+            <!-- Footer -->
+            <footer
+                class="bg-slate-900 text-white px-6 md:px-20 py-12 scroll-animate opacity-0 translate-y-12 transition-all duration-[800ms] ease-out">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-slate-800 pb-12">
+                    <div class="flex flex-col gap-4 col-span-1 md:col-span-1">
+                        <div class="flex flex-wrap items-center gap-6">
+                            <div class="h-28 sm:h-32 w-auto flex items-center justify-start overflow-hidden">
+                                <img class="h-full w-auto object-contain drop-shadow-lg"
+                                    data-alt="Butcha Brigadeiros logo" src="lo.png" />
+                            </div>
+                            <div class="h-16 sm:h-20 w-auto flex items-center justify-start overflow-hidden">
+                                <img class="h-full w-auto object-contain opacity-90 drop-shadow-md"
+                                    data-alt="Logo Branco Especial" src="Logo_branco.png" />
+                            </div>
+                            <div class="h-16 sm:h-20 w-auto flex items-center justify-start overflow-hidden">
+                                <img class="h-full w-auto object-contain opacity-90 drop-shadow-md"
+                                    data-alt="Escola StartUP Logo" src="logoStartup_tr.png" />
+                            </div>
+                        </div>
+                        <p class="text-slate-400 text-sm">Projeto desenvolvido por alunos da Escola StartUp da rede
+                            Calábria (Projeto Food Makers).</p>
+                    </div>
+                    <div>
+                        <h5 class="font-bold font-display mb-4 uppercase text-xs tracking-widest text-slate-500">Links
+                            Rápidos</h5>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li><a class="hover:text-primary transition-colors" href="#">Nossos Sabores</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="#">Kits Presente</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="#">Eventos</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="#">Sustentabilidade</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-bold font-display mb-4 uppercase text-xs tracking-widest text-slate-500">Contato
+                        </h5>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-sm">mail</span> ola@butcha.com</li>
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-sm">phone</span> (51) 99143-7454</li>
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-sm">location_on</span> Rua Treze, 64 - Bairro
+                                Bom Jesus - Porto Alegre</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-bold font-display mb-4 uppercase text-xs tracking-widest text-slate-500">
+                            Newsletter</h5>
+                        <div class="flex gap-2">
+                            <input class="bg-slate-800 border-none rounded-lg flex-1 text-sm focus:ring-primary"
+                                placeholder="Seu email" type="email" />
+                            <button class="bg-primary text-slate-900 p-2 rounded-lg">
+                                <span class="material-symbols-outlined">send</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="pt-8 text-center text-slate-500 text-xs flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p>© 2026 Butcha Brigadeiros. Todos os direitos reservados.</p>
+                    <div class="flex gap-6">
+                        <a class="hover:text-white" href="#">Privacidade</a>
+                        <a class="hover:text-white" href="#">Termos</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    // Adiciona classes ativas quando o elemento se torna visível (entrando ou saindo, sentido p/ cima e baixo)
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("opacity-100", "translate-y-0");
+                        entry.target.classList.remove("opacity-0", "translate-y-12");
+                    } else {
+                        // Reseta a classe quando sai da tela
+                        entry.target.classList.add("opacity-0", "translate-y-12");
+                        entry.target.classList.remove("opacity-100", "translate-y-0");
+                    }
+                });
+            }, {
+                // Threshold de 0.15 = 15% do elemento tem q estar na tela p/ disparar
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px" // Pequena margem p/ disparar a animacao mais cedo
+            });
+
+            document.querySelectorAll(".scroll-animate").forEach((el) => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+
+</html>
