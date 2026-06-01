@@ -43,6 +43,60 @@
         body {
             font-family: 'Playfair Display', serif;
         }
+        /* Estilos customizados para o Laboratório de Segurança */
+        .border-vulnerable-active {
+            border-color: rgba(239, 68, 68, 0.75) !important;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3) !important;
+            transition: all 0.5s ease;
+        }
+        .border-secure-active {
+            border-color: rgba(34, 197, 94, 0.75) !important;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3) !important;
+            transition: all 0.5s ease;
+        }
+        @keyframes pulse-border-red {
+            0%, 100% { border-color: rgba(239, 68, 68, 0.3); }
+            50% { border-color: rgba(239, 68, 68, 0.85); }
+        }
+        @keyframes pulse-border-green {
+            0%, 100% { border-color: rgba(34, 197, 94, 0.3); }
+            50% { border-color: rgba(34, 197, 94, 0.85); }
+        }
+        .pulse-red {
+            animation: pulse-border-red 2s infinite ease-in-out;
+        }
+        .pulse-green {
+            animation: pulse-border-green 2s infinite ease-in-out;
+        }
+        @keyframes scaleUp {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .animate-scale-up {
+            animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        /* Estilos para o Pop-up de Phishing (CSRF) */
+        @keyframes pulse-phishing-border {
+            0%, 100% { border-color: rgba(239, 68, 68, 0.85); box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+            50% { border-color: rgba(251, 191, 36, 0.95); box-shadow: 0 0 25px rgba(251, 191, 36, 0.6); }
+        }
+        @keyframes flash-text-yellow-white {
+            0%, 100% { color: #fbbf24; text-shadow: 0 0 6px rgba(251, 191, 36, 0.6); }
+            50% { color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.9); }
+        }
+        @keyframes pulse-button-glow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); box-shadow: 0 0 20px rgba(251, 191, 36, 0.8); }
+        }
+        .animate-pulse-border {
+            animation: pulse-phishing-border 1.2s infinite alternate ease-in-out;
+        }
+        .animate-flash-text {
+            animation: flash-text-yellow-white 0.8s infinite steps(2, start);
+        }
+        .animate-pulse-button {
+            animation: pulse-button-glow 1s infinite ease-in-out;
+        }
     </style>
 </head>
 
@@ -220,6 +274,48 @@
                         </div>
                     </div>
                 </section>
+                <!-- SQLi Simulator Section -->
+                <section id="secao-sqli" class="relative px-6 md:px-20 py-20 bg-background-light dark:bg-slate-900/40 border-2 border-transparent transition-all duration-300">
+                    <!-- Neon vulnerability highlight status -->
+                    <div class="absolute top-4 right-6 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm transition-all duration-300" id="badge-sqli">
+                        <span class="h-2 w-2 rounded-full bg-red-500 animate-ping"></span>
+                        <span class="text-red-500 dark:text-red-400 font-mono">SQL Injection (Pág 3)</span>
+                    </div>
+                    
+                    <div class="max-w-xl mx-auto w-full">
+                        <!-- Left: Search Box -->
+                        <div class="flex flex-col gap-6">
+                            <span class="text-earth-olive font-bold tracking-widest font-petrona uppercase text-xs text-center">Simulação do Banco de Dados</span>
+                            <h2 class="text-slate-900 dark:text-slate-100 text-3xl md:text-4xl font-bold font-display leading-tight text-center">
+                                Rastrear Entrega do Pedido
+                            </h2>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed text-center">
+                                Simule a busca de um cliente pelo status da entrega. Pedidos existentes: <code class="bg-slate-200 dark:bg-slate-800 px-1.5 py-0.5 rounded font-mono text-xs text-slate-700 dark:text-slate-350">PED-001</code>, <code class="bg-slate-200 dark:bg-slate-800 px-1.5 py-0.5 rounded font-mono text-xs text-slate-700 dark:text-slate-350">PED-002</code>, <code class="bg-slate-200 dark:bg-slate-800 px-1.5 py-0.5 rounded font-mono text-xs text-slate-700 dark:text-slate-350">PED-003</code>.
+                            </p>
+                            
+                            <div class="flex flex-col gap-3">
+                                <label class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Código de Rastreamento</label>
+                                <div class="flex gap-2">
+                                    <input type="text" id="input-sqli" placeholder="Digite o código (ex: PED-001)" class="flex-1 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary text-slate-800 dark:text-slate-100 transition-all font-mono" />
+                                    <button id="btn-sqli-buscar" class="px-6 bg-primary hover:bg-primary/90 text-slate-950 font-bold rounded-xl text-sm transition-all flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-sm">search</span> Buscar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Result Console -->
+                            <div class="bg-slate-950 rounded-2xl p-5 border border-slate-800 font-mono text-xs text-slate-300 shadow-inner flex flex-col gap-3 min-h-[160px]">
+                                <div class="flex justify-between items-center border-b border-slate-850 pb-2">
+                                    <span class="text-slate-500 font-semibold uppercase tracking-wider text-[10px]">Resultado no Console do Servidor</span>
+                                    <span class="text-slate-600" id="sqli-result-count">0 registros</span>
+                                </div>
+                                <div id="sqli-result-output" class="text-slate-400 whitespace-pre-wrap leading-relaxed max-h-[200px] overflow-y-auto">
+                                    Aguardando busca...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 <!-- Recipe Section with Texture Focus -->
                 <section
                     class="px-6 md:px-20 py-20 bg-earth-beige/40 dark:bg-background-dark scroll-animate opacity-0 translate-y-12 transition-all duration-[800ms] ease-out"
@@ -320,6 +416,60 @@
                         </div>
                     </div>
                 </section>
+                <!-- XSS Simulator Section -->
+                <section id="secao-xss" class="relative px-6 md:px-20 py-20 bg-white dark:bg-slate-900/10 border-2 border-transparent transition-all duration-300">
+                    <!-- Neon vulnerability highlight status -->
+                    <div class="absolute top-4 right-6 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm transition-all duration-300" id="badge-xss">
+                        <span class="h-2 w-2 rounded-full bg-red-500 animate-ping"></span>
+                        <span class="text-red-500 dark:text-red-400 font-mono">Script no Site (XSS) (Pág 4)</span>
+                    </div>
+                    
+                    <div class="max-w-5xl mx-auto flex flex-col gap-10">
+                        <div class="text-center flex flex-col items-center gap-3">
+                            <span class="text-earth-olive font-bold tracking-widest font-petrona uppercase text-xs">Mural Interativo</span>
+                            <h2 class="text-slate-900 dark:text-slate-100 text-3xl md:text-4xl font-bold font-display leading-tight">
+                                Mural de Depoimentos dos Clientes
+                            </h2>
+                            <div class="h-1 w-20 bg-earth-terracotta rounded-full"></div>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-2xl">
+                                O que você achou dos nossos brigadeiros artesanais de Butiá? Publique um comentário abaixo e veja como a página o renderiza na tela.
+                            </p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                            <!-- Left 5 Cols: Form -->
+                            <div class="lg:col-span-5 flex flex-col gap-5 bg-background-light dark:bg-slate-900/50 p-6 rounded-2xl border border-earth-beige/50 dark:border-slate-800">
+                                <h3 class="text-slate-900 dark:text-slate-100 font-bold font-display text-base uppercase tracking-wider">Novo Comentário</h3>
+                                
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-xs font-bold text-slate-700 dark:text-slate-350 uppercase">Seu Nome</label>
+                                    <input type="text" id="input-xss-nome" value="Estudante de Segurança" class="bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary text-slate-850 dark:text-slate-100" />
+                                </div>
+                                
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-xs font-bold text-slate-700 dark:text-slate-350 uppercase">Comentário</label>
+                                    <textarea id="input-xss-msg" rows="4" placeholder="Adorei o brigadeiro!" class="bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary text-slate-850 dark:text-slate-100 font-mono"></textarea>
+                                </div>
+                                
+                                <button id="btn-xss-enviar" class="w-full py-3 bg-primary hover:bg-primary/90 text-slate-950 font-bold rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">send</span> Publicar Depoimento
+                                </button>
+                            </div>
+                            
+                            <!-- Right 7 Cols: Comments List -->
+                            <div class="lg:col-span-7 flex flex-col gap-4">
+                                <h3 class="text-slate-900 dark:text-slate-100 font-bold font-display text-base uppercase tracking-wider flex items-center justify-between">
+                                    <span>Mural de Depoimentos</span>
+                                    <span class="text-xs text-slate-400 normal-case font-normal" id="xss-render-type">Renderizando via: innerHTML 🔴</span>
+                                </h3>
+                                
+                                <div id="xss-comments-list" class="space-y-4 max-h-[360px] overflow-y-auto pr-2">
+                                    <!-- Depoimentos dinâmicos -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 <!-- Call to Action -->
                 <section
                     class="px-6 md:px-20 py-16 scroll-animate opacity-0 translate-y-12 transition-all duration-[800ms] ease-out">
@@ -333,6 +483,66 @@
                             class="inline-block bg-primary hover:bg-white text-slate-900 px-10 py-5 rounded-full text-xl font-bold font-display tracking-wider transition-all shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgba(242,204,13,0.3)] hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-primary/50 whitespace-nowrap">
                             Visite nosso projeto
                         </a>
+                    </div>
+                </section>
+                <!-- CSRF Simulator Section -->
+                <section id="secao-csrf" class="relative px-6 md:px-20 py-20 bg-slate-100 dark:bg-slate-900/10 border-2 border-transparent transition-all duration-300">
+                    <!-- Neon vulnerability highlight status -->
+                    <div class="absolute top-4 right-6 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm transition-all duration-300" id="badge-csrf">
+                        <span class="h-2 w-2 rounded-full bg-red-500 animate-ping"></span>
+                        <span class="text-red-500 dark:text-red-400 font-mono">Falsificação de Requisição (CSRF) (Pág 5)</span>
+                    </div>
+                    
+                    <div class="max-w-5xl mx-auto flex flex-col gap-10">
+                        <div class="text-center flex flex-col items-center gap-3">
+                            <span class="text-earth-olive font-bold tracking-widest font-petrona uppercase text-xs">Simulação Multi-Janela</span>
+                            <h2 class="text-slate-900 dark:text-slate-100 text-3xl md:text-4xl font-bold font-display leading-tight">
+                                Painel de Fidelidade & Simulador CSRF
+                            </h2>
+                            <div class="h-1 w-20 bg-earth-terracotta rounded-full"></div>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-2xl">
+                                Teste como um site de phishing contorna a segurança usando a sessão ativa do usuário se o app não utilizar tokens de segurança.
+                            </p>
+                        </div>
+                        
+                        <div class="max-w-xl mx-auto w-full">
+                            <!-- Left Screen: Safe App Dashboard -->
+                            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-850 shadow-xl flex flex-col gap-6 relative overflow-hidden">
+                                <!-- Session header indicator -->
+                                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="h-3 w-3 rounded-full bg-green-500 animate-pulse"></div>
+                                        <span class="text-xs font-bold font-sans tracking-wide uppercase text-slate-500">Sessão Ativa: butchabrigadeiros.com</span>
+                                    </div>
+                                    <span class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 px-2 py-0.5 rounded font-mono font-bold text-slate-650 dark:text-slate-350">USUÁRIO: joao_calabria</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between bg-primary/10 p-5 rounded-2xl border border-primary/20">
+                                    <div class="flex flex-col gap-1">
+                                        <span class="text-slate-500 dark:text-slate-400 text-xs font-medium font-sans uppercase">Seus Pontos de Fidelidade</span>
+                                        <h4 class="text-slate-950 dark:text-slate-50 text-3xl font-black font-display" id="csrf-pontos-saldo">150 Pontos</h4>
+                                    </div>
+                                    <span class="material-symbols-outlined text-4xl text-primary animate-pulse">loyalty</span>
+                                </div>
+                                
+                                <div class="flex flex-col gap-3">
+                                    <h5 class="text-slate-900 dark:text-slate-100 font-bold font-display text-sm uppercase">Painel do Usuário</h5>
+                                    <p class="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">
+                                        Você está logado e acumulando pontos Butcha. Pontos podem ser trocados ou transferidos dentro da plataforma.
+                                    </p>
+                                    <div class="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-150 dark:border-slate-850 text-xs flex flex-col gap-2">
+                                        <div class="flex justify-between items-center text-slate-650 dark:text-slate-400">
+                                            <span>Última Ação:</span>
+                                            <span class="font-mono text-slate-800 dark:text-slate-200" id="csrf-ultima-acao">Nenhuma transação efetuada</span>
+                                        </div>
+                                        <div class="flex justify-between items-center text-slate-650 dark:text-slate-400" id="csrf-token-display-row">
+                                            <span>Token CSRF de Proteção:</span>
+                                            <span class="font-mono text-green-500 font-bold" id="csrf-token-val">CSRF_TOKEN_8899AABB</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </main>
@@ -450,6 +660,638 @@
                 });
             });
         });
+    </script>
+
+    <!-- Barra Flutuante de Controle de Segurança (Lab) -->
+    <div id="cyber-security-bar" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] w-[92%] max-w-4xl bg-slate-900/95 dark:bg-slate-950/95 backdrop-blur-md border border-slate-700/50 rounded-2xl shadow-[0_10px_35px_rgba(0,0,0,0.45)] px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 transition-all duration-300">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-red-500 animate-pulse text-2xl" id="cyber-icon">lock_open</span>
+            <div class="text-left">
+                <h4 class="text-white font-bold font-display text-sm tracking-wider uppercase">Laboratório de Segurança Digital</h4>
+                <p class="text-slate-400 text-xs font-sans font-light" id="cyber-status-text">Simulando vulnerabilidades do PDF "Protegendo Seus Aplicativos"</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4 w-full md:w-auto justify-end">
+            <!-- Interruptor Modo Seguro / Modo Vulnerável -->
+            <div class="flex items-center bg-slate-800/80 p-1 rounded-full border border-slate-700 w-full md:w-auto justify-between">
+                <button id="btn-vulnerable" class="flex items-center justify-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-all uppercase bg-red-600 text-white shadow-lg">
+                    <span class="h-2 w-2 rounded-full bg-red-300 animate-ping"></span>
+                    Vulnerável
+                </button>
+                <button id="btn-secure" class="flex items-center justify-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-all uppercase text-slate-400 hover:text-slate-200">
+                    Seguro
+                </button>
+            </div>
+            <!-- Botão Guia do Aluno -->
+            <button id="btn-toggle-guide" class="flex shrink-0 items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-slate-950 rounded-xl text-xs font-bold tracking-wider uppercase shadow-md transition-all">
+                <span class="material-symbols-outlined text-sm">menu_book</span>
+                Guia do Aluno
+            </button>
+        </div>
+    </div>
+
+    <!-- Gaveta Lateral de Instruções (Estudante) -->
+    <div id="student-guide-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[480px] bg-slate-950/95 border-l border-slate-800 shadow-[0_0_50px_rgba(0,0,0,0.6)] z-[110] transform translate-x-full transition-transform duration-300 overflow-y-auto flex flex-col font-sans text-slate-350">
+        <!-- Header -->
+        <div class="p-6 border-b border-slate-900 flex items-center justify-between bg-slate-900">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">security</span>
+                <h3 class="text-white font-bold font-display text-lg">Guia do Estudante</h3>
+            </div>
+            <button id="btn-close-guide" class="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        
+        <!-- Conteúdo -->
+        <div class="p-6 flex-1 space-y-8 overflow-y-auto">
+            <!-- Introdução -->
+            <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-850">
+                <p class="text-xs leading-relaxed text-slate-400">
+                    Bem-vindo ao laboratório prático! Use este painel para explorar as vulnerabilidades descritas em <strong class="text-white">"Protegendo Seus Aplicativos"</strong>. Copie os códigos de teste (payloads) abaixo e execute-os na página.
+                </p>
+            </div>
+
+            <!-- Exercício 1: SQL Injection -->
+            <div class="space-y-3">
+                <div class="flex items-center gap-2 border-b border-slate-850 pb-2">
+                    <span class="text-[10px] bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded font-mono">PDF pág 3</span>
+                    <h4 class="text-white font-bold text-sm font-display uppercase tracking-wide">1. Injeção de SQL (SQL Injection)</h4>
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    <strong>O que é:</strong> Modificar a consulta SQL original injetando comandos no banco de dados.
+                </p>
+                <div class="bg-slate-900/40 p-3 rounded-lg border border-slate-850 space-y-3">
+                    <p class="text-xs font-semibold text-slate-200">Como testar:</p>
+                    <ol class="list-decimal list-inside text-[11px] text-slate-400 space-y-1">
+                        <li>Alterne o app para o modo <span class="text-red-400 font-bold">Vulnerável</span>.</li>
+                        <li>Vá para a seção <span class="text-slate-200">"Rastrear Entrega do Pedido"</span> na página.</li>
+                        <li>Insira um dos códigos abaixo no campo e clique em buscar:</li>
+                    </ol>
+                    <div class="flex items-center justify-between bg-slate-950 p-2 rounded border border-slate-800 mt-2">
+                        <code class="text-red-400 text-xs font-mono font-bold" id="payload-sqli">' OR '1'='1</code>
+                        <button onclick="copiarTexto('payload-sqli')" class="text-xs text-primary hover:underline flex items-center gap-1 font-semibold">
+                            <span class="material-symbols-outlined text-[14px]">content_copy</span> Copiar
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-950 p-2 rounded border border-slate-800 mt-2">
+                        <code class="text-red-400 text-xs font-mono font-bold" id="payload-sqli-union">' UNION SELECT 'Invasor', 'SenhaHashAdmin123', 'admin@butcha.com.br' --</code>
+                        <button onclick="copiarTexto('payload-sqli-union')" class="text-xs text-primary hover:underline flex items-center gap-1 font-semibold">
+                            <span class="material-symbols-outlined text-[14px]">content_copy</span> Copiar
+                        </button>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed pt-1">
+                        <strong>O que acontece:</strong> No modo vulnerável, a consulta retorna todos os pedidos (tautologia) ou revela o banco de credenciais administrativas. Mude para o modo <span class="text-green-400 font-bold">Seguro</span> e refaça a busca para ver como a parametrização neutraliza a ameaça.
+                    </p>
+                    <div class="border-t border-slate-800/80 pt-2 mt-2 text-[11px] text-slate-400 space-y-1.5">
+                        <p class="font-bold text-green-400 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[14px]">gavel</span> Prática Recomendada:
+                        </p>
+                        <p class="leading-relaxed">
+                            Nunca concatene parâmetros diretamente nas strings SQL. Use <strong>Prepared Statements</strong> (Consultas Parametrizadas) para validar os dados e separar a lógica do código SQL:
+                        </p>
+                        <div class="bg-slate-950 p-2 rounded border border-slate-800 font-mono text-[10px] space-y-1 text-slate-350 overflow-x-auto">
+                            <p class="text-red-400">// Vulnerável (Concatenação):</p>
+                            <p class="line-through text-red-500/80">`SELECT * FROM pedidos WHERE codigo_rastreio = '${val}'`</p>
+                            <p class="text-green-400">// Seguro (Prepared Statement):</p>
+                            <p class="font-bold text-emerald-400">`SELECT * FROM pedidos WHERE codigo_rastreio = ?`</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercício 2: XSS -->
+            <div class="space-y-3">
+                <div class="flex items-center gap-2 border-b border-slate-850 pb-2">
+                    <span class="text-[10px] bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded font-mono">PDF pág 4</span>
+                    <h4 class="text-white font-bold text-sm font-display uppercase tracking-wide">2. Roubo por Scripts (XSS)</h4>
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    <strong>O que é:</strong> Inserir scripts na página que executam no navegador de quem a acessa.
+                </p>
+                <div class="bg-slate-900/40 p-3 rounded-lg border border-slate-850 space-y-3">
+                    <p class="text-xs font-semibold text-slate-200">Como testar:</p>
+                    <ol class="list-decimal list-inside text-[11px] text-slate-400 space-y-1">
+                        <li>No modo <span class="text-red-400 font-bold">Vulnerável</span>, vá na seção <span class="text-slate-200">"Mural de Depoimentos"</span>.</li>
+                        <li>Insira o payload abaixo na caixa de comentário e clique em publicar:</li>
+                    </ol>
+                    <div class="flex items-center justify-between bg-slate-950 p-2 rounded border border-slate-800 mt-2">
+                        <code class="text-red-400 text-xs font-mono font-bold" id="payload-xss">&lt;img src="x" onerror="window.dispararAlertaXSS()"&gt;</code>
+                        <button onclick="copiarTexto('payload-xss')" class="text-xs text-primary hover:underline flex items-center gap-1 font-semibold">
+                            <span class="material-symbols-outlined text-[14px]">content_copy</span> Copiar
+                        </button>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed pt-1">
+                        <strong>O que acontece:</strong> O navegador renderiza o HTML diretamente via `innerHTML`, forçando a execução do script no evento de erro da imagem simulada. Isso abre a simulação de roubo de cookies. Alterne para o modo <span class="text-green-400 font-bold">Seguro</span> para ver como o escape de HTML anula a execução.
+                    </p>
+                    <div class="border-t border-slate-800/80 pt-2 mt-2 text-[11px] text-slate-400 space-y-1.5">
+                        <p class="font-bold text-green-400 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[14px]">gavel</span> Prática Recomendada:
+                        </p>
+                        <p class="leading-relaxed">
+                            Filtre e escape qualquer entrada de usuário antes de renderizá-la. No Frontend, prefira usar propriedades seguras que tratam os dados como texto puro:
+                        </p>
+                        <div class="bg-slate-950 p-2 rounded border border-slate-800 font-mono text-[10px] space-y-1 text-slate-355 overflow-x-auto">
+                            <p class="text-red-400">// Vulnerável (Interpreta HTML/JS):</p>
+                            <p class="line-through text-red-500/80">`elemento.innerHTML = inputUsuario;`</p>
+                            <p class="text-green-400">// Seguro (Trata apenas como texto):</p>
+                            <p class="font-bold text-emerald-400">`elemento.textContent = inputUsuario;`</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercício 3: CSRF -->
+            <div class="space-y-3">
+                <div class="flex items-center gap-2 border-b border-slate-850 pb-2">
+                    <span class="text-[10px] bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded font-mono">PDF pág 5</span>
+                    <h4 class="text-white font-bold text-sm font-display uppercase tracking-wide">3. Falsificação de Requisição (CSRF)</h4>
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    <strong>O que é:</strong> Enganar o usuário logado para executar ações indesejadas em outro site.
+                </p>
+                <div class="bg-slate-900/40 p-3 rounded-lg border border-slate-850 space-y-3">
+                    <p class="text-xs font-semibold text-slate-200">Como testar:</p>
+                    <ol class="list-decimal list-inside text-[11px] text-slate-400 space-y-1">
+                        <li>Role até a seção <span class="text-slate-200">"Simulador de Ataque CSRF"</span>.</li>
+                        <li>Verifique se o usuário possui 150 pontos na "Sessão Ativa".</li>
+                        <li>No anúncio malicioso flutuante que surgiu na tela ao rolar a página, clique em <span class="text-red-450 font-bold">"REIVINDICAR MEUS BRIGADEIROS AGORA!"</span>.</li>
+                    </ol>
+                    <p class="text-xs text-slate-400 leading-relaxed pt-1">
+                        <strong>O que acontece:</strong> No modo <span class="text-red-400 font-bold">Vulnerável</span>, a chamada POST secreta funciona, roubando os pontos do usuário. No modo <span class="text-green-400 font-bold">Seguro</span>, a requisição é bloqueada pois o servidor exige e valida um token anti-CSRF exclusivo da página principal.
+                    </p>
+                    <div class="border-t border-slate-800/80 pt-2 mt-2 text-[11px] text-slate-400 space-y-1.5">
+                        <p class="font-bold text-green-400 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[14px]">gavel</span> Prática Recomendada:
+                        </p>
+                        <p class="leading-relaxed">
+                            Exija <strong>Tokens Anti-CSRF</strong> em requisições que alteram estado (POST/PUT) e configure cookies com diretivas restritivas para evitar envio automático por sites terceiros:
+                        </p>
+                        <div class="bg-slate-950 p-2 rounded border border-slate-800 font-mono text-[10px] space-y-1 text-slate-355 overflow-x-auto">
+                            <p class="text-green-400">// Cabeçalho HTTP com Token Anti-CSRF:</p>
+                            <p class="font-bold text-emerald-450">`X-CSRF-Token: token_gerado_no_backend`</p>
+                            <p class="text-green-400">// Cookies de Sessão protegidos:</p>
+                            <p class="font-bold text-emerald-450">`Set-Cookie: session=...; SameSite=Strict; Secure`</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Sucesso Ataque XSS -->
+    <div id="modal-xss" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[150] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-slate-900 border border-red-500/50 rounded-2xl max-w-lg w-[90%] p-6 md:p-8 flex flex-col gap-6 shadow-[0_0_50px_rgba(239,68,68,0.35)] text-center animate-scale-up font-sans">
+            <div class="flex justify-center">
+                <div class="h-16 w-16 bg-red-500/20 text-red-500 border border-red-500/30 rounded-full flex items-center justify-center animate-bounce">
+                    <span class="material-symbols-outlined text-4xl">warning</span>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <h3 class="text-white font-bold font-display text-2xl uppercase tracking-wider text-red-500">🚨 Ataque XSS Executado!</h3>
+                <p class="text-slate-350 text-sm leading-relaxed">
+                    O script inserido no comentário foi interpretado diretamente pelo navegador. Em cenários reais, scripts podem capturar informações confidenciais do usuário.
+                </p>
+            </div>
+            
+            <!-- Cookies Capturados -->
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-left font-mono text-xs space-y-2 text-slate-400">
+                <p class="text-red-400 font-bold">// Dados Capturados pelo Invasor:</p>
+                <p><strong class="text-slate-200">Conteúdo do cookie ("document.cookie"):</strong></p>
+                <div class="bg-slate-900 p-2 rounded border border-slate-800 text-yellow-500 overflow-x-auto whitespace-nowrap">
+                    session_token=butcha_admin_cookie_12345; user_role=admin; tracking_id=butcha_998877
+                </div>
+                <p class="text-[10px] text-slate-500">// O atacante enviaria estes dados silenciosamente para o servidor dele.</p>
+            </div>
+            
+            <div class="flex flex-col gap-3">
+                <div class="bg-slate-850 p-3 rounded-lg border border-slate-800 text-[11px] text-slate-400 leading-relaxed text-left">
+                    <strong class="text-slate-350">Proteção (PDF Pág 4):</strong> "Filtrar todo código que os usuários podem inserir no site!". Ative o modo Seguro para desativar a injeção HTML.
+                </div>
+                <button id="btn-fechar-modal-xss" class="w-full py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
+                    Fechar Janela de Simulação
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Resultado Ataque CSRF -->
+    <div id="modal-csrf" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[150] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-slate-900 border rounded-2xl max-w-lg w-[90%] p-6 md:p-8 flex flex-col gap-6 text-center animate-scale-up font-sans" id="modal-csrf-box">
+            <div class="flex justify-center">
+                <div class="h-16 w-16 rounded-full flex items-center justify-center animate-bounce" id="modal-csrf-icon-container">
+                    <span class="material-symbols-outlined text-4xl" id="modal-csrf-icon">warning</span>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <h3 class="text-white font-bold font-display text-2xl uppercase tracking-wider" id="modal-csrf-title">Resultado do Ataque CSRF</h3>
+                <p class="text-slate-350 text-sm leading-relaxed" id="modal-csrf-desc">
+                    Descrição da simulação de requisição.
+                </p>
+            </div>
+            
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-left font-mono text-xs text-slate-450 space-y-1 overflow-x-auto whitespace-pre text-slate-400" id="modal-csrf-console">
+                <!-- Log HTTP simulado -->
+            </div>
+            
+            <div class="flex flex-col gap-3">
+                <div class="bg-slate-850 p-3 rounded-lg border border-slate-800 text-[11px] text-slate-400 leading-relaxed text-left" id="modal-csrf-fix-desc">
+                    Recomendação de correção.
+                </div>
+                <button id="btn-fechar-modal-csrf" class="w-full py-2.5 text-white font-bold rounded-xl text-sm transition-all shadow-md">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Anúncio Malicioso CSRF (Floating Ad Pop-up) -->
+    <div id="csrf-phishing-ad" class="fixed bottom-24 right-6 z-[90] max-w-sm w-[90%] bg-red-950/95 border-2 border-red-500 rounded-2xl shadow-[0_0_30px_rgba(239,68,68,0.4)] p-5 flex flex-col gap-4 transition-all duration-500 transform translate-y-20 opacity-0 pointer-events-none font-sans select-none animate-pulse-border">
+        <!-- Header do Anúncio -->
+        <div class="flex items-center justify-between border-b border-red-900/50 pb-2">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-red-500 text-sm animate-bounce">warning</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-red-400 font-mono">SITE DE TERCEIROS: brigaderias-gratis.net</span>
+            </div>
+            <button id="btn-close-csrf-ad" class="text-slate-400 hover:text-white text-xs font-bold transition-all">
+                ✕
+            </button>
+        </div>
+        <!-- Conteúdo do Anúncio -->
+        <div class="text-center flex flex-col gap-2 p-1">
+            <span class="text-3xl">🎁 🍫 🎁</span>
+            <h4 class="text-yellow-400 font-extrabold text-base uppercase tracking-tight animate-flash-text">
+                🎉 PARABÉNS! GANHE BRIGADEIROS GRÁTIS! 🎉
+            </h4>
+            <p class="text-slate-200 text-xs leading-relaxed">
+                Ganhe <strong class="text-yellow-300">50 brigadeiros gourmet</strong> da Butcha! Promoção de aniversário da Escola StartUp.
+            </p>
+        </div>
+        <!-- Botão Principal Blinking -->
+        <button id="btn-csrf-phish" class="w-full py-3 bg-gradient-to-r from-red-600 via-yellow-500 to-red-600 hover:brightness-110 text-slate-950 font-black uppercase tracking-wider rounded-xl text-xs shadow-lg transition-all transform hover:scale-[1.03] animate-pulse-button border border-yellow-400">
+            👉 REIVINDICAR MEUS BRIGADEIROS AGORA! 👈
+        </button>
+        <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-900 font-mono text-[9px] text-slate-500 space-y-0.5 text-left">
+            <span class="text-red-400 font-bold">// Código rodando e    <!-- LÓGICA DE SIMULAÇÃO DE SEGURANÇA (JavaScript) -->
+    <script id="security-lab-script">
+        document.addEventListener("DOMContentLoaded", () => {
+            // Estado Global: "vulneravel" ou "seguro"
+            let appMode = "vulneravel"; 
+
+            // Dados Simulados
+            const mockPedidos = [
+                { codigo: 'PED-001', cliente: 'Alice Silva', brigadeiro: 'Butiá Tradicional', quantidade: '12 un', status: 'Saiu para entrega' },
+                { codigo: 'PED-002', cliente: 'Bruno Souza', brigadeiro: 'Butiá com Coco', quantidade: '24 un', status: 'Em produção' },
+                { codigo: 'PED-003', cliente: 'Camila Lima', brigadeiro: 'Butiá Gourmet', quantidade: '50 un', status: 'Entregue' }
+            ];
+
+            const mockUsuarios = [
+                { usuario: 'admin', email: 'admin@butcha.com.br', hash: '$2y$10$S9wR...[SENHA_CRIPTOGRAFADA_ADMIN]', cargo: 'Administrador Geral' },
+                { usuario: 'financeiro', email: 'financeiro@butcha.com.br', hash: '$2y$10$K3bW...[SENHA_CRIPTOGRAFADA_FIN]', cargo: 'Diretor Financeiro' }
+            ];
+
+            const mockComentarios = [
+                { nome: 'Ana Maria', mensagem: 'O de brigadeiro com Butiá é maravilhoso! 😍' },
+                { nome: 'Carlos Eduardo', mensagem: 'Super cremoso e azedinho na medida certa. Recomendo muito.' }
+            ];
+
+            let pontosSaldo = 150;
+            const csrfTokenFicticio = "CSRF_TOKEN_8899AABB";
+
+            // Referências HTML (Todas agrupadas no início para evitar erros de inicialização/TDZ)
+            const btnVulnerable = document.getElementById('btn-vulnerable');
+            const btnSecure = document.getElementById('btn-secure');
+            const cyberIcon = document.getElementById('cyber-icon');
+            const cyberStatusText = document.getElementById('cyber-status-text');
+
+            const secaoSqli = document.getElementById('secao-sqli');
+            const secaoXss = document.getElementById('secao-xss');
+            const secaoCsrf = document.getElementById('secao-csrf');
+
+            const badgeSqli = document.getElementById('badge-sqli');
+            const badgeXss = document.getElementById('badge-xss');
+            const badgeCsrf = document.getElementById('badge-csrf');
+
+            const btnToggleGuide = document.getElementById('btn-toggle-guide');
+            const btnCloseGuide = document.getElementById('btn-close-guide');
+            const guideDrawer = document.getElementById('student-guide-drawer');
+
+            const inputSqli = document.getElementById('input-sqli');
+            const btnSqliBuscar = document.getElementById('btn-sqli-buscar');
+            const sqliResultOutput = document.getElementById('sqli-result-output');
+            const sqliResultCount = document.getElementById('sqli-result-count');
+
+            const inputXssNome = document.getElementById('input-xss-nome');
+            const inputXssMsg = document.getElementById('input-xss-msg');
+            const btnXssEnviar = document.getElementById('btn-xss-enviar');
+            const btnFecharModalXss = document.getElementById('btn-fechar-modal-xss');
+            const modalXss = document.getElementById('modal-xss');
+            const commentsList = document.getElementById('xss-comments-list');
+
+            const csrfSaldoSpan = document.getElementById('csrf-pontos-saldo');
+            const csrfUltimaAcaoSpan = document.getElementById('csrf-ultima-acao');
+            const btnCsrfPhish = document.getElementById('btn-csrf-phish');
+            const btnFecharModalCsrf = document.getElementById('btn-fechar-modal-csrf');
+            const modalCsrf = document.getElementById('modal-csrf');
+            const modalCsrfBox = document.getElementById('modal-csrf-box');
+            const modalCsrfIconContainer = document.getElementById('modal-csrf-icon-container');
+            const modalCsrfIcon = document.getElementById('modal-csrf-icon');
+            const modalCsrfTitle = document.getElementById('modal-csrf-title');
+            const modalCsrfDesc = document.getElementById('modal-csrf-desc');
+            const modalCsrfConsole = document.getElementById('modal-csrf-console');
+            const modalCsrfFixDesc = document.getElementById('modal-csrf-fix-desc');
+
+            const csrfAd = document.getElementById('csrf-phishing-ad');
+            const btnCloseCsrfAd = document.getElementById('btn-close-csrf-ad');
+
+            // --- Lógica de Alternância de Modos ---
+            function updateAppMode(mode) {
+                appMode = mode;
+                if (mode === 'vulneravel') {
+                    // Botões do Painel
+                    btnVulnerable.className = "flex items-center justify-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-all uppercase bg-red-600 text-white shadow-lg";
+                    btnVulnerable.innerHTML = `<span class="h-2 w-2 rounded-full bg-red-300 animate-ping"></span>Vulnerável`;
+                    btnSecure.className = "flex items-center justify-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-all uppercase text-slate-400 hover:text-slate-200";
+                    
+                    // Ícone e Status
+                    cyberIcon.className = "material-symbols-outlined text-red-500 animate-pulse text-2xl";
+                    cyberIcon.innerText = "lock_open";
+                    cyberStatusText.innerHTML = `Simulando vulnerabilidades do PDF <strong class="text-red-400 font-semibold">"Protegendo Seus Aplicativos"</strong>`;
+
+                    // Destaques de Borda nas Seções
+                    secaoSqli.className = secaoSqli.className.replace('border-secure-active pulse-green', '').trim() + ' border-vulnerable-active pulse-red';
+                    secaoXss.className = secaoXss.className.replace('border-secure-active pulse-green', '').trim() + ' border-vulnerable-active pulse-red';
+                    secaoCsrf.className = secaoCsrf.className.replace('border-secure-active pulse-green', '').trim() + ' border-vulnerable-active pulse-red';
+
+                    // Badges de Alerta das Seções
+                    badgeSqli.className = "absolute top-4 right-6 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm bg-red-950/20 text-red-450 border border-red-500/30";
+                    badgeSqli.innerHTML = `<span class="h-2 w-2 rounded-full bg-red-500 animate-ping"></span><span class="text-red-500 dark:text-red-450 font-mono">SQL Injection (Pág 3)</span>`;
+                    
+                    badgeXss.className = "absolute top-4 right-6 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm bg-red-950/20 text-red-450 border border-red-500/30";
+                    badgeXss.innerHTML = `<span class="h-2 w-2 rounded-full bg-red-500 animate-ping"></span><span class="text-red-500 dark:text-red-450 font-mono">Script no Site (XSS) (Pág 4)</span>`;
+                    
+                    badgeCsrf.className = "absolute top-4 right-6 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm bg-red-950/20 text-red-450 border border-red-500/30";
+                    badgeCsrf.innerHTML = `<span class="h-2 w-2 rounded-full bg-red-500 animate-ping"></span><span class="text-red-500 dark:text-red-450 font-mono">Falsificação (CSRF) (Pág 5)</span>`;
+
+                    // Labels nos Simuladores
+                    document.getElementById('xss-render-type').innerText = "Renderizando via: innerHTML 🔴";
+                    document.getElementById('csrf-token-display-row').style.display = "none";
+                } else {
+                    // Botões do Painel
+                    btnSecure.className = "flex items-center justify-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-all uppercase bg-green-600 text-white shadow-lg";
+                    btnSecure.innerHTML = `<span class="h-2 w-2 rounded-full bg-green-300 animate-ping"></span>Seguro`;
+                    btnVulnerable.className = "flex items-center justify-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-all uppercase text-slate-400 hover:text-slate-200";
+                    btnVulnerable.innerHTML = "Vulnerável";
+
+                    // Ícone e Status
+                    cyberIcon.className = "material-symbols-outlined text-green-500 text-2xl";
+                    cyberIcon.innerText = "verified_user";
+                    cyberStatusText.innerHTML = `Proteções ativadas com base no PDF <strong class="text-green-400 font-semibold">"Protegendo Seus Aplicativos"</strong>`;
+
+                    // Destaques de Borda nas Seções
+                    secaoSqli.className = secaoSqli.className.replace('border-vulnerable-active pulse-red', '').trim() + ' border-secure-active pulse-green';
+                    secaoXss.className = secaoXss.className.replace('border-vulnerable-active pulse-red', '').trim() + ' border-secure-active pulse-green';
+                    secaoCsrf.className = secaoCsrf.className.replace('border-vulnerable-active pulse-red', '').trim() + ' border-secure-active pulse-green';
+
+                    // Badges de Alerta das Seções
+                    badgeSqli.className = "absolute top-4 right-6 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm bg-green-950/20 text-green-450 border border-green-500/30";
+                    badgeSqli.innerHTML = `<span class="h-2 w-2 rounded-full bg-green-500"></span><span class="text-green-500 dark:text-green-450 font-mono">SQL Injection Protegido 🟢</span>`;
+                    
+                    badgeXss.className = "absolute top-4 right-6 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm bg-green-950/20 text-green-450 border border-green-500/30";
+                    badgeXss.innerHTML = `<span class="h-2 w-2 rounded-full bg-green-500"></span><span class="text-green-500 dark:text-green-450 font-mono">XSS Protegido 🟢</span>`;
+                    
+                    badgeCsrf.className = "absolute top-4 right-6 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm bg-green-950/20 text-green-450 border border-green-500/30";
+                    badgeCsrf.innerHTML = `<span class="h-2 w-2 rounded-full bg-green-500"></span><span class="text-green-500 dark:text-green-450 font-mono">CSRF Protegido 🟢</span>`;
+
+                    // Labels nos Simuladores
+                    document.getElementById('xss-render-type').innerText = "Renderizando via: textContent 🟢";
+                    document.getElementById('csrf-token-display-row').style.display = "flex";
+                }
+                
+                // Reprocessa telas que possuem renderização condicional
+                renderComments();
+            }
+
+            btnVulnerable.addEventListener('click', () => updateAppMode('vulneravel'));
+            btnSecure.addEventListener('click', () => updateAppMode('seguro'));
+
+            // --- Lógica da Gaveta Lateral de Instruções ---
+            btnToggleGuide.addEventListener('click', () => {
+                guideDrawer.classList.remove('translate-x-full');
+            });
+
+            btnCloseGuide.addEventListener('click', () => {
+                guideDrawer.classList.add('translate-x-full');
+            });
+
+            // --- Simulador SQL Injection ---
+
+            btnSqliBuscar.addEventListener('click', () => {
+                const queryVal = inputSqli.value.trim();
+                let queryLower = queryVal.toLowerCase();
+                let records = [];
+
+                if (appMode === 'vulneravel') {
+                    // Verifica payloads comuns
+                    if (queryLower.includes("' or '1'='1") || queryLower.includes("' or 1=1") || queryLower.includes("' or 'a'='a")) {
+                        records = mockPedidos.map(p => ({ Tipo: 'PEDIDO', ID: p.codigo, Dono: p.cliente, Info: `${p.brigadeiro} (${p.quantidade})`, Status: p.status }));
+                    } else if (queryLower.includes("union select")) {
+                        records = [
+                            ...mockPedidos.map(p => ({ Tipo: 'PEDIDO', ID: p.codigo, Dono: p.cliente, Info: `${p.brigadeiro} (${p.quantidade})`, Status: p.status })),
+                            ...mockUsuarios.map(u => ({ Tipo: 'USUÁRIO (LEAK)', ID: u.usuario, Dono: u.email, Info: `SenhaHash: ${u.hash}`, Status: u.cargo }))
+                        ];
+                    } else {
+                        // Busca comum exata
+                        const found = mockPedidos.filter(p => p.codigo.toLowerCase() === queryVal.toLowerCase());
+                        records = found.map(p => ({ Tipo: 'PEDIDO', ID: p.codigo, Dono: p.cliente, Info: `${p.brigadeiro} (${p.quantidade})`, Status: p.status }));
+                    }
+                } else {
+                    // Modo Seguro - Apenas busca exata sem interpretar comandos injetados
+                    const found = mockPedidos.filter(p => p.codigo.toLowerCase() === queryVal.toLowerCase());
+                    records = found.map(p => ({ Tipo: 'PEDIDO', ID: p.codigo, Dono: p.cliente, Info: `${p.brigadeiro} (${p.quantidade})`, Status: p.status }));
+                }
+
+                // Renderiza Console do SQL
+                sqliResultCount.innerText = `${records.length} registro(s) encontrado(s)`;
+                if (records.length > 0) {
+                    let html = "<table class='w-full text-left border-collapse border border-slate-800 text-[10px]'>";
+                    html += "<tr class='bg-slate-900 text-slate-400 font-semibold'><th class='p-1.5 border border-slate-800'>Tipo</th><th class='p-1.5 border border-slate-800'>ID/Chave</th><th class='p-1.5 border border-slate-800'>Dono/Email</th><th class='p-1.5 border border-slate-800'>Info</th><th class='p-1.5 border border-slate-800'>Status</th></tr>";
+                    records.forEach(r => {
+                        const leakStyle = r.Tipo.includes('LEAK') ? 'text-red-400 bg-red-950/20 font-bold' : 'text-slate-350';
+                        html += `<tr class='${leakStyle}'><td class='p-1.5 border border-slate-800'>${r.Tipo}</td><td class='p-1.5 border border-slate-800'>${r.ID}</td><td class='p-1.5 border border-slate-800'>${r.Dono}</td><td class='p-1.5 border border-slate-800'>${r.Info}</td><td class='p-1.5 border border-slate-800'>${r.Status}</td></tr>`;
+                    });
+                    html += "</table>";
+                    sqliResultOutput.innerHTML = html;
+                } else {
+                    sqliResultOutput.innerHTML = `<span class="text-slate-500 italic">Nenhum registro encontrado para o código informado.</span>`;
+                }
+            });
+
+            // --- Simulador XSS ---
+            window.dispararAlertaXSS = function() {
+                modalXss.classList.remove('opacity-0', 'pointer-events-none');
+            };
+
+            btnFecharModalXss.addEventListener('click', () => {
+                modalXss.classList.add('opacity-0', 'pointer-events-none');
+            });
+
+            function renderComments() {
+                commentsList.innerHTML = '';
+                
+                mockComentarios.forEach(c => {
+                    const card = document.createElement('div');
+                    card.className = "p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/30 flex flex-col gap-1";
+                    
+                    const name = document.createElement('span');
+                    name.className = "text-xs font-bold text-primary font-display";
+                    name.innerText = c.nome;
+                    card.appendChild(name);
+                    
+                    const textContent = document.createElement('div');
+                    textContent.className = "text-sm text-slate-700 dark:text-slate-300 break-words font-sans";
+                    
+                    if (appMode === 'vulneravel') {
+                        // Renderização sem escape (Vulnerável)
+                        textContent.innerHTML = c.mensagem;
+                    } else {
+                        // Renderização com escape de texto
+                        textContent.textContent = c.mensagem;
+                    }
+                    
+                    card.appendChild(textContent);
+                    commentsList.appendChild(card);
+                    
+                    // Executa scripts adicionados após serem montados no DOM caso estejamos em modo vulnerável
+                    if (appMode === 'vulneravel' && c.mensagem.includes('<script>')) {
+                        try {
+                            const scripts = card.getElementsByTagName('script');
+                            for (let s of scripts) {
+                                eval(s.innerText);
+                            }
+                        } catch(e) { console.error(e); }
+                    }
+                });
+            }
+
+            btnXssEnviar.addEventListener('click', () => {
+                const nome = inputXssNome.value.trim() || "Anônimo";
+                const mensagem = inputXssMsg.value.trim();
+
+                if (!mensagem) return;
+
+                mockComentarios.push({ nome, mensagem });
+                renderComments();
+                inputXssMsg.value = '';
+            });
+
+            renderComments();
+
+            // --- Simulador CSRF ---
+            btnFecharModalCsrf.addEventListener('click', () => {
+                modalCsrf.classList.add('opacity-0', 'pointer-events-none');
+            });
+
+            btnCsrfPhish.addEventListener('click', () => {
+                if (appMode === 'vulneravel') {
+                    // Transação executada com sucesso sem token
+                    pontosSaldo = 0;
+                    csrfSaldoSpan.innerText = `${pontosSaldo} Pontos`;
+                    csrfSaldoSpan.className = "text-red-500 dark:text-red-400 text-3xl font-black font-display animate-pulse";
+                    csrfUltimaAcaoSpan.innerText = "Saldo Zerado - Pontos roubados via CSRF";
+                    csrfUltimaAcaoSpan.className = "font-mono text-red-500 font-bold";
+
+                    // Estilo do Modal de Sucesso do Ataque (Alerta Vermelho)
+                    modalCsrfBox.className = "bg-slate-900 border border-red-500/50 rounded-2xl max-w-lg w-[90%] p-6 md:p-8 flex flex-col gap-6 shadow-[0_0_50px_rgba(239,68,68,0.35)] text-center animate-scale-up font-sans";
+                    modalCsrfIconContainer.className = "h-16 w-16 bg-red-500/20 text-red-500 border border-red-500/30 rounded-full flex items-center justify-center";
+                    modalCsrfIcon.innerText = "warning";
+                    modalCsrfTitle.innerText = "🚨 Ataque CSRF bem-sucedido!";
+                    modalCsrfTitle.className = "text-red-500 font-bold font-display text-2xl uppercase tracking-wider";
+                    modalCsrfDesc.innerText = "O site malicioso enviou uma requisição silenciosa de transferência de pontos. Como você estava logado e o app não valida tokens CSRF, o navegador processou a requisição com sucesso utilizando os seus cookies ativos!";
+                    
+                    modalCsrfConsole.innerHTML = `POST /api/transferir_pontos HTTP/1.1
+Host: butchabrigadeiros.com
+Cookie: session_token=butcha_admin_cookie_12345
+Content-Type: application/json
+
+{"destino": "hacker@invasor.com", "quantidade": 150}
+
+>> HTTP/1.1 200 OK
+>> {"status": "sucesso", "mensagem": "150 pontos transferidos!"}`;
+
+                    modalCsrfFixDesc.innerHTML = `<strong class="text-slate-350">Proteção (PDF Pág 5):</strong> "Usar tokens de segurança em formulários importantes!". Ative o modo seguro para adicionar a validação de token anti-CSRF nas chamadas.`;
+                    btnFecharModalCsrf.className = "w-full py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md";
+
+                } else {
+                    // Transação bloqueada por falta de token
+                    modalCsrfBox.className = "bg-slate-900 border border-green-500/50 rounded-2xl max-w-lg w-[90%] p-6 md:p-8 flex flex-col gap-6 shadow-[0_0_50px_rgba(34,197,94,0.35)] text-center animate-scale-up font-sans";
+                    modalCsrfIconContainer.className = "h-16 w-16 bg-green-500/20 text-green-500 border border-green-500/30 rounded-full flex items-center justify-center";
+                    modalCsrfIcon.innerText = "shield";
+                    modalCsrfTitle.innerText = "🛡️ Ataque CSRF Bloqueado!";
+                    modalCsrfTitle.className = "text-green-550 dark:text-green-450 font-bold font-display text-2xl uppercase tracking-wider";
+                    modalCsrfDesc.innerText = "O site malicioso tentou forjar a requisição, mas o painel seguro da Butcha exige um Token CSRF gerado especificamente para esta sessão. A chamada foi sumariamente recusada pelo servidor.";
+                    
+                    modalCsrfConsole.innerHTML = `POST /api/transferir_pontos HTTP/1.1
+Host: butchabrigadeiros.com
+Cookie: session_token=butcha_admin_cookie_12345
+Content-Type: application/json
+
+{"destino": "hacker@invasor.com", "quantidade": 150}
+
+>> HTTP/1.1 403 Forbidden
+>> {"erro": "Ação negada: Token CSRF inválido ou ausente."}`;
+
+                    modalCsrfFixDesc.innerHTML = `Como o site malicioso não consegue acessar os dados da página Butcha original devido à política de mesma origem (Same-Origin Policy), ele não possui o token de segurança para enviar junto com o formulário, bloqueando a fraude!`;
+                    btnFecharModalCsrf.className = "w-full py-2.5 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl text-sm transition-all shadow-md";
+                }
+
+                modalCsrf.classList.remove('opacity-0', 'pointer-events-none');
+            });
+
+            // --- Observador de Interseção para Exibição Dinâmica do Anúncio Phishing ---
+            const adObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Slide-in do anúncio malicioso
+                        csrfAd.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+                        csrfAd.classList.add('translate-y-0', 'opacity-100');
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            adObserver.observe(secaoCsrf);
+
+            btnCloseCsrfAd.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Oculta o anúncio
+                csrfAd.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+                csrfAd.classList.remove('translate-y-0', 'opacity-100');
+            });
+
+            // Inicializa o modo após carregar todas as variáveis e funções
+            updateAppMode('vulneravel');
+        });
+
+        // Função Global de Cópia Utilizada no Guia (fora do escopo DOMContentLoaded para acesso por links inline)
+        function copiarTexto(id) {
+            const codeEl = document.getElementById(id);
+            const textToCopy = codeEl.innerText || codeEl.textContent;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.querySelector(`[onclick="copiarTexto('${id}')"]`);
+                const originalContent = btn.innerHTML;
+                
+                btn.innerHTML = `<span class="material-symbols-outlined text-[14px]">done</span> Copiado!`;
+                btn.classList.add("text-green-400");
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.classList.remove("text-green-400");
+                }, 2000);
+            }).catch(err => {
+                console.error("Erro ao copiar: ", err);
+            });
+        }
     </script>
 </body>
 
